@@ -1,0 +1,55 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+@config './tailwind.config.js';
+
+
+.even-odd-background-factor div:nth-child(even) {
+    background-color: white;
+}
+.even-odd-background-factor div:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+.text-grey-desc {
+    color: #95918b;
+    font-size: 14px;
+}
+
+.ticket-icon-size {
+    width: 100px;
+    height: 100px;
+}
+
+.ticket-icon-size svg {
+    width: 100px;
+    height: 100px;
+}
+
+.spinner {
+    animation: rotate 2s linear infinite;
+}
+.spinner .path {
+    stroke: #93bfec;
+    stroke-linecap: round;
+    animation: dash 1.5s ease-in-out infinite;
+}
+@keyframes rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+@keyframes dash {
+    0% {
+        stroke-dasharray: 1, 150;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: -35;
+    }
+    100% {
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: -124;
+    }
+}
+

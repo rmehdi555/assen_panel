@@ -1,0 +1,14 @@
+@font-face {
+    font-family: iransans;
+    font-style: normal;
+    src: url('iransans/IRANSansWeb(FaNum).woff') format('woff'),
+    url('iransans/iransanswebfanum.ttf') format('truetype'),
+    url('iransans/IRANSansWeb(FaNum).eot') format('embedded-opentype');
+}
+
+/** {*/
+/*    font-family: "iransans", serif;*/
+/*    -moz-font-feature-settings: "ss02";*/
+/*    -webkit-font-feature-settings: "ss02";*/
+/*    font-feature-settings: "ss02";*/
+/*}*/
