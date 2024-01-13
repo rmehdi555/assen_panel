@@ -13,6 +13,7 @@ class ArticleCategory extends Model
 
     protected $fillable = [
         'title',
+        'user_id',
         'slug',
         'is_show',
         'priority',
@@ -31,11 +32,6 @@ class ArticleCategory extends Model
     public function file(): BelongsTo
     {
         return $this->belongsTo(File::class, 'file_id');
-    }
-
-    public function seo(): MorphOne
-    {
-        return $this->morphOne(Seo::class, 'seoable');
     }
 
 }

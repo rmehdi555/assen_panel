@@ -29,6 +29,7 @@ class CreateArticle extends CreateRecord
         ]);
         $data['file_id'] = $file->id;
         $data['created_by'] = auth()->id();
+        $data['user_id'] = auth()->id();
         return $data;
     }
 }

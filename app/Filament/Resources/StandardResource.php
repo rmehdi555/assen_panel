@@ -2,13 +2,14 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ArticleCategoryResource\Pages;
-use App\Models\ArticleCategory;
+use App\Filament\Resources\StandardResource\Pages;
+use App\Filament\Resources\StandardResource\RelationManagers;
+use App\Models\Standard;
+use App\Models\Standards;
+use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Section;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -20,21 +21,22 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Mohamedsabil83\FilamentFormsTinyeditor\Components\TinyEditor;
 
-class ArticleCategoryResource extends Resource
+class StandardResource extends Resource
 {
-    protected static ?string $model = ArticleCategory::class;
+    protected static ?string $model = Standards::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-inbox-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $modelLabel = 'دسته بندی مقالات';
+    protected static ?string $modelLabel = 'استاندارد ها';
 
-    protected static ?string $pluralModelLabel = 'دسته بندی مقالات';
+    protected static ?string $pluralModelLabel = 'استاندارد';
 
     protected static ?int $navigationSort = 2;
 
-    protected static ?string $navigationGroup = 'محتوا';
+    protected static ?string $navigationGroup = 'محصولات';
 
     public static function form(Form $form): Form
     {
@@ -46,7 +48,6 @@ class ArticleCategoryResource extends Resource
                     ]),
 
                     Section::make()->schema([
-                        Textarea::make('description')->label('خلاصه')->maxLength(65535)->required(),
                         TinyEditor::make('body')->label('متن')->fileAttachmentsDisk('public')->fileAttachmentsVisibility('public')->fileAttachmentsDirectory('uploads')->required(),
                     ]),
 
@@ -102,14 +103,14 @@ class ArticleCategoryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListArticleCategories::route('/'),
-            'create' => Pages\CreateArticleCategory::route('/create'),
-            'edit' => Pages\EditArticleCategory::route('/{record}/edit'),
+            'index' => Pages\ListStandards::route('/'),
+            'create' => Pages\CreateStandard::route('/create'),
+            'edit' => Pages\EditStandard::route('/{record}/edit'),
         ];
     }
 
     public static function canViewAny(): bool
     {
-        return auth()->user()->can('article-categories::view');
+        return auth()->user()->can('standard::view');
     }
 }

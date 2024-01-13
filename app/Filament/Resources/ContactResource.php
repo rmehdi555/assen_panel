@@ -43,10 +43,11 @@ class ContactResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')->label('نام'),
+                TextColumn::make('family')->label('نام خانوادگی'),
                 TextColumn::make('created_at')->label('تاریخ'),
                 TextColumn::make('email')->label('ایمبل'),
-                TextColumn::make('cell_number')->label('شماره همراه'),
-                TextColumn::make('description')->label('متن پیام'),
+                TextColumn::make('phone')->label('شماره همراه'),
+                TextColumn::make('body')->label('متن پیام'),
             ])
             ->defaultSort('created_at','desc')
             ->filters([

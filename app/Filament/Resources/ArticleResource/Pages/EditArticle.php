@@ -45,6 +45,7 @@ class EditArticle extends EditRecord
             'file_category_id' => 2,
         ]);
         $data['file_id'] = $file->id;
+        $data['user_id'] = auth()->id();
         return $data;
     }
 }

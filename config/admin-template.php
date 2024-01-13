@@ -10,6 +10,11 @@ return [
         'slider::view',
         'tickets-all::view',
         'landing::view',
-        'landing-contact::view'
+        'landing-contact::view',
+        'product-categories::view',
+        'product::view',
+        'factory::view',
+        'size::view',
+        'standard::view',
     ],
 ];

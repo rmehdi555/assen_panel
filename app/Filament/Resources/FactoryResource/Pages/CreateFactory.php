@@ -1,36 +1,20 @@
 <?php
 
-namespace App\Filament\Resources\ArticleCategoryResource\Pages;
+namespace App\Filament\Resources\FactoryResource\Pages;
 
-use App\Filament\Resources\ArticleCategoryResource;
+use App\Filament\Resources\FactoryResource;
 use App\Models\File;
 use Filament\Actions;
-use Filament\Resources\Pages\EditRecord;
+use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\File as LaravelFile;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
-class EditArticleCategory extends EditRecord
+class CreateFactory extends CreateRecord
 {
-    protected static string $resource = ArticleCategoryResource::class;
+    protected static string $resource = FactoryResource::class;
 
-    protected function getHeaderActions(): array
-    {
-        return [
-            Actions\DeleteAction::make(),
-        ];
-    }
-
-    protected function mutateFormDataBeforeFill(array $data): array
-    {
-        $file = File::find($data['file_id']);
-        if ($file?->path)
-            $data['image_name'] = str_replace(config('app.url') . '/storage/', '', $file?->path);
-
-        return $data;
-    }
-
-    protected function mutateFormDataBeforeSave(array $data): array
+    protected function mutateFormDataBeforeCreate(array $data): array
     {
         $imagePath = Storage::disk('public')->path($data['image_name']);
 

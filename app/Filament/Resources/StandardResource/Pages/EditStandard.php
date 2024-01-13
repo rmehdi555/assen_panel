@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Resources\ArticleCategoryResource\Pages;
+namespace App\Filament\Resources\StandardResource\Pages;
 
-use App\Filament\Resources\ArticleCategoryResource;
+use App\Filament\Resources\StandardResource;
 use App\Models\File;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\File as LaravelFile;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
-class EditArticleCategory extends EditRecord
+class EditStandard extends EditRecord
 {
-    protected static string $resource = ArticleCategoryResource::class;
+    protected static string $resource = StandardResource::class;
 
     protected function getHeaderActions(): array
     {

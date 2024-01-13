@@ -10,7 +10,7 @@ class Factories extends Model
 {
     use SoftDeletes;
     protected $fillable = [
-        'title','body','slug','images','priority','status','product_categories_id','tag_title',
+        'title','body','slug','images','priority','is_show','product_categories_id','tag_title','user_id','file_id',
         'seo_title','seo_description','seo_follow','seo_index','seo_canonical','schema'
     ];
     protected $casts = [

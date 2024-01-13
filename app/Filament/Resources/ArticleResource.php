@@ -48,25 +48,25 @@ class ArticleResource extends Resource
                         ]),
 
                         Section::make()->schema([
+                            Textarea::make('description')->label('خلاصه')->maxLength(65535)->required(),
                             TinyEditor::make('body')->label('متن')->fileAttachmentsDisk('public')->fileAttachmentsVisibility('public')->fileAttachmentsDirectory('uploads')->required(),
-                            Textarea::make('excerpt')->required()->label('خلاصه')->maxLength(65535)->required(),
                         ]),
 
-                        Section::make('سئو')->relationship('seo')->schema([
-                            TextInput::make('title')->label('تایتل صفحه')->maxLength(255),
-                            TextInput::make('keyword')->label('کیورد صفحه')->maxLength(255),
-                            Textarea::make('description')->label('توضیحات صفحه'),
+                        Section::make('سئو')->schema([
+                            TextInput::make('seo_title')->label('تایتل صفحه')->maxLength(255),
+                            Textarea::make('seo_description')->label('توضیحات صفحه')->maxLength(65535),
+                            Toggle::make('seo_follow')->label('follow'),
+                            Toggle::make('seo_index')->label('index'),
+                            TextInput::make('seo_canonical')->label('canonical'),
                         ])->collapsed(),
 
                     ])->columnSpan(2),
 
                     Section::make()->schema([
                         TextInput::make('slug')->label('اسلاگ')->unique(ignoreRecord: true)->maxLength(255)->required(),
-                        Select::make('category_id')->relationship('category', 'name')->label('دسته بندی')->required(),
-                        Select::make('tags')->relationship('tags', 'name')->multiple()->label('تگ ها')->required(),
+                        Select::make('category_id')->relationship('category', 'title')->label('دسته بندی')->required(),
                         FileUpload::make('image_name')->image()->label('تصویر')->imageEditor()->required(),
                         Toggle::make('is_show')->label('وضعیت نمایش')->required(),
-                        Toggle::make('is_future')->label('منتخب')->required(),
                     ])->columnSpan(1),
                 ]),
             ]);
@@ -84,13 +84,13 @@ class ArticleResource extends Resource
                     ->openUrlInNewTab()
                     ->icon('heroicon-o-link')
                     ->color('primary'),
-                TextColumn::make('category.name')->label('دسته بندی'),
+                TextColumn::make('category.title')->label('دسته بندی'),
                 TextColumn::make('author.name')->label('نویسنده'),
                 IconColumn::make('is_show')->label('وضعیت نمایش')->boolean(),
                 TextColumn::make('created_at')->label('ایجاد در')->dateTime(),
             ])
             ->filters([
-                SelectFilter::make('category')->label('دسته بندی')->relationship('category', 'name'),
+                SelectFilter::make('category')->label('دسته بندی')->relationship('category', 'title'),
                 Filter::make('is_show')->label('وضعیت نمایش')->toggle(),
             ])
             ->actions([

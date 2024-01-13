@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Resources\ArticleCategoryResource\Pages;
+namespace App\Filament\Resources\ProductResource\Pages;
 
-use App\Filament\Resources\ArticleCategoryResource;
+use App\Filament\Resources\ProductResource;
 use App\Models\File;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\File as LaravelFile;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
-class EditArticleCategory extends EditRecord
+class EditProduct extends EditRecord
 {
-    protected static string $resource = ArticleCategoryResource::class;
+    protected static string $resource = ProductResource::class;
 
     protected function getHeaderActions(): array
     {
@@ -20,7 +20,6 @@ class EditArticleCategory extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
-
     protected function mutateFormDataBeforeFill(array $data): array
     {
         $file = File::find($data['file_id']);
