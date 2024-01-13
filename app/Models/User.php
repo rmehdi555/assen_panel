@@ -24,11 +24,15 @@ class User extends Authenticatable implements FilamentUser
      */
     protected $fillable = [
         'name',
+        'family',
         'email',
         'password',
-        'cell_number',
-        'wallet_balance',
-        'nationalcode',
+        'phone',
+        'active',
+        'level',
+        'status',
+        'user_name',
+        'cell_number'
     ];
 
     /**
@@ -50,11 +54,6 @@ class User extends Authenticatable implements FilamentUser
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-
-    public function addresses(): HasMany
-    {
-        return $this->hasMany(UserAddress::class);
-    }
 
     public function canAccessPanel(Panel $panel): bool
     {

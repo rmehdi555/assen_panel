@@ -18,17 +18,25 @@ class TicketLog extends Model
         'status_id',
         'ip',
         'agent_id',
-        'attachment_id',
+        'file_id',
         'department_id',
+        'created_at',
     ];
 
     public function agent(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'agent_id', 'id');
+        return $this->belongsTo(User::class, 'agent_id');
     }
-
-    public function file(): BelongsTo
+    public function department(): BelongsTo
     {
-        return $this->belongsTo(File::class, 'file_id', 'id');
+        return $this->belongsTo(Department::class,'department_id');
+    }
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class,'user_id');
+    }
+    public function status(): BelongsTo
+    {
+        return $this->belongsTo(TicketStatus::class,'status_id');
     }
 }

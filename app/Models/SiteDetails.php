@@ -5,11 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Slider extends Model
+class SiteDetails extends Model
 {
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     use SoftDeletes;
     protected $fillable = [
-        'title','images','link','type','priority','status',
+        'title', 'key', 'value','type','priority','status','images',
     ];
     protected $casts = [
         'images' => 'array'

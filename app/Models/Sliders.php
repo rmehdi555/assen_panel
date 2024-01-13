@@ -4,14 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class City extends Model
+class Sliders extends Model
 {
     use HasFactory;
 
     protected $fillable = [
+        'id',
         'title',
-        'state_id'
+        'link',
+        'is_show',
+        'file_id',
+        'target'
     ];
 
     protected $hidden = [
@@ -19,4 +24,9 @@ class City extends Model
         'updated_at',
         'deleted_at'
     ];
+
+    public function thumbnail(): BelongsTo
+    {
+        return $this->belongsTo(File::class, 'file_id');
+    }
 }

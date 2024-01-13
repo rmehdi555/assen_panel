@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use App\Filament\Widgets\DashboardArticleChart;
 use App\Filament\Widgets\DashboardInvoiceChart;
 use App\Filament\Widgets\DashboardPaymentChart;
 use App\Filament\Widgets\DashboardStates;
@@ -14,8 +15,9 @@ class Dashboard extends BasePage
     {
         return [
             DashboardStates::class,
-            DashboardInvoiceChart::class,
+//            DashboardInvoiceChart::class,
             DashboardUserChart::class,
+            DashboardArticleChart::class,
 //            DashboardPaymentChart::class,
         ];
     }

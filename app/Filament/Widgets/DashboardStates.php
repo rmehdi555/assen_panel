@@ -2,51 +2,62 @@
 
 namespace App\Filament\Widgets;
 
+use App\Models\Article;
 use App\Models\Exchanges;
 use App\Models\Invoice;
+use App\Models\Products;
 use App\Models\Ticket;
 use App\Models\Transaction;
+use App\Models\User;
 use Carbon\Carbon;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Card;
+use PhpOffice\PhpSpreadsheet\Calculation\Database\DProduct;
 
 class DashboardStates extends BaseWidget
 {
     protected function getCards(): array
     {
         return [
-            Card::make('تعداد استعلام های امروز', $this->invoiceToday())
+            Card::make('تعداد مقالات', number_format($this->articlesCount()))
                 ->icon('heroicon-o-check')
                 ->color('success'),
-            Card::make('مجموع تراکنش های امروز (ریال)', number_format($this->transactionSumToday()))
+            Card::make('تعداد کاربران', number_format($this->usersCount()))
                 ->icon('heroicon-o-arrow-trending-up')
                 ->color('success'),
-            Card::make('قیمت امروز دلار (ریال)', number_format($this->showDollarPrice()))
-                ->icon('heroicon-o-clipboard-document-list')
+            Card::make('تعداد محصولات سایت', number_format($this->productsCount()))
+                ->icon('heroicon-o-arrow-trending-up')
                 ->color('success'),
-            Card::make('تعداد تیکت های بسته نشده', $this->tickets())
-                ->icon('heroicon-o-exclamation-triangle')
-                ->color('success')
+//            Card::make('قیمت امروز دلار (ریال)', number_format($this->showDollarPrice()))
+//                ->icon('heroicon-o-clipboard-document-list')
+//                ->color('success'),
+//            Card::make('تعداد تیکت های بسته نشده', $this->tickets())
+//                ->icon('heroicon-o-exclamation-triangle')
+//                ->color('success')
         ];
     }
 
-    private function tickets(): int
+    private function articlesCount(): int
     {
-        return Ticket::whereNot('status_id', 7)->count();
+        return Article::where('status', 1)->count();
     }
 
-    private function invoiceToday(): int
+    private function usersCount(): int
     {
-        return Invoice::where('invoicedate', Carbon::today())->count();
+        return User::all()->count();
+    }
+    private function productsCount(): int
+    {
+        return Products::where('status', 1)->count();
     }
 
-    private function showDollarPrice(): int
-    {
-        return Exchanges::find(1)->value;
-    }
-
-    private function transactionSumToday(): int
-    {
-        return Transaction::whereDate('created_at', Carbon::today())->where('issuccess', 1)->sum('amount');
-    }
+//    private function showDollarPrice(): int
+//    {
+//        return Exchanges::find(1)->value;
+//    }
+//
+//    private function transactionSumToday(): int
+//    {
+//        return Transaction::whereDate('created_at', Carbon::today())->where('issuccess', 1)->sum('amount');
+//    }
 }

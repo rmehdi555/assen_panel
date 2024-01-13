@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Carrier extends Model
+class CurrencyConvert extends Model
 {
-//    use SoftDeletes;
-
+    use SoftDeletes;
     protected $fillable = [
-        'name'
+        'user_id', 'exFrom', 'exTo', 'rate', 'status'
     ];
+
+    protected $dates = ['deleted_at'];
 }

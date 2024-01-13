@@ -49,9 +49,9 @@ class UserResource extends Resource
             Section::make()->schema([
                 Grid::make(1)->schema([
                     TextInput::make('name')->label('نام')->required(),
+                    TextInput::make('family')->label('نام خانوادگی')->required(),
                     TextInput::make('email')->label('ایمیل')->required()->email(),
                     TextInput::make('cell_number')->label('شماره موبایل')->required()->numeric()->minLength(11),
-                    TextInput::make('nationalcode')->label('کد ملی')->numeric()->required()->length(10),
                 ]),
             ]),
         ]);
@@ -66,7 +66,6 @@ class UserResource extends Resource
                 TextColumn::make('email')->label('ایمیل'),
                 TextColumn::make('created_at')->label('تاریخ ثبت نام'),
                 TextColumn::make('cell_number')->label('شماره موبایل'),
-                TextColumn::make('wallet_balance')->label('شارژ کیف پول')->money('irr'),
             ])
             ->filters([
                 Filter::make('name')->form([
@@ -100,73 +99,6 @@ class UserResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-
-                Action::make('recharge-wallet')
-                    ->label('شارژ کیف پول')
-                    ->color('danger')
-                    ->icon('heroicon-o-currency-dollar')
-                    ->form([
-                        TextInput::make('amount')->label('مقدار (ریال)')->required()->minValue(0)->mask(RawJs::make('$money($input)'))
-                            ->dehydrateStateUsing(fn(string $state): string => preg_replace("/[^0-9]/", "", $state)),
-                        TextInput::make('bank_reference_id')->label('شماره تراکنش')->required(),
-                        Select::make('status')->label('نوع تراکنش')->required()->options([
-                            'admin-charge' => 'افزودن به کیف پول',
-                            'admin-discharge' => 'کسر از کیف پول',
-                        ]),
-                        Select::make('invoice_id')->label('کد سفارش')->model(Credit::class)
-                            ->searchable()
-                            ->relationship('invoice', 'code')
-                            ->hint('در صورت پر کردن این فیلد این تراکنش وارد بخش مالی می شود!'),
-                        Textarea::make('description')->label('توضیحات'),
-                    ])
-                    ->action(function (User $record, array $data) {
-                        if ($data['status'] == 'admin-discharge' and Credit::where('user_id', $record->id)->where('payment_status', 'Succeeded')->sum('amount') < $data['amount']) {
-                            Notification::make()->title('مبلغ وارد شده از شارژ کیف پول بیشتر میباشد')->danger()->send();
-                            return $record;
-                        }
-                        if (isset(Invoice::find($data['invoice_id'])->user_id) and Invoice::find($data['invoice_id'])->user_id != $record->id) {
-                            Notification::make()->title('این سفارش برای این کاربر نیست.')->danger()->send();
-                            return $record;
-                        }
-
-                        Credit::create([
-                            'amount' => ($data['status'] == 'admin-charge') ? $data['amount'] : $data['amount'] * -1,
-                            'bank_reference_id' => $data['bank_reference_id'],
-                            'status' => $data['status'],
-                            'description' => $data['description'],
-                            'user_id' => $record->id,
-                            'payment_status' => 'Succeeded',
-                            'invoice_id' => $data['invoice_id'] ?? null,
-                            'admin_user_id' => Auth::id(),
-                        ]);
-
-                        if (filled($data['invoice_id']))
-                            Transaction::create([
-                                'method' => ($data['status'] == 'admin-charge') ? 'عودت وجه' : 'پرداخت از کیف پول',
-                                'amount' => ($data['status'] == 'admin-charge') ? $data['amount'] * -1 : $data['amount'],
-                                'issuccess' => true,
-                                'date' => now(),
-                                'payment_method_id' => 6,
-                                'comment' => $data['description'] . PHP_EOL . '(تراکنش مربوط به کیف پول)',
-                                'user_id' => $record->id,
-                                'invoice_id' => $data['invoice_id'],
-                                'admin_user_id' => Auth::id(),
-                            ]);
-                        Notification::make()->title('موفقیت آمیز بود')->success()->send();
-                        $record->update([
-                            'wallet_balance' => Credit::where('user_id', $record->id)->where('payment_status', 'Succeeded')->sum('amount')
-                        ]);
-
-                        return $record;
-
-                    }),
-
-                Action::make('wallet-log-list')
-                    ->label('لاگ کیف پول')
-                    ->color('warning')
-                    ->icon('heroicon-o-clipboard-document-list')
-                    ->url(fn($record): string => self::getUrl('wallet-log-list', [$record->id])),
-
             ])
             ->bulkActions([])
             ->defaultSort('id', 'desc');
@@ -175,7 +107,6 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-            UsersAddressesRelationManager::class
         ];
     }
 
@@ -185,7 +116,6 @@ class UserResource extends Resource
             'index' => Pages\ListUsers::route('/'),
             'create' => Pages\CreateUser::route('/create'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
-            'wallet-log-list' => Pages\WalletLogList::route('/wallet-log/{record}'),
         ];
     }
 

@@ -3,12 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Base extends Model
+class ProductPriceLogs extends Model
 {
-    use SoftDeletes;
+
     protected $fillable = [
-        'title'
+        'price', 'product_id'
     ];
 }

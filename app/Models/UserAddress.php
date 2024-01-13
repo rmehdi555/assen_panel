@@ -13,10 +13,13 @@ class UserAddress extends Model
     protected $table = 'users_addresses';
 
     protected $fillable = [
+        'postalcode',
+        'content',
+        'user_id',
         'state_id',
         'city_id',
-        'content',
-        'postalcode',
+        'lat',
+        'lng'
     ];
 
     public function state(): BelongsTo

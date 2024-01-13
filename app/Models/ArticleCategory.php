@@ -12,12 +12,20 @@ class ArticleCategory extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'name',
+        'title',
         'slug',
         'is_show',
-        'sort',
+        'priority',
         'description',
+        'body',
         'file_id',
+        'images',
+        'seo_title',
+        'seo_description',
+        'seo_follow',
+        'seo_index',
+        'seo_canonical'
+
     ];
 
     public function file(): BelongsTo

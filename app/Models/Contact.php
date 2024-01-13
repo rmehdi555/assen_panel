@@ -13,8 +13,10 @@ class Contact extends Model
     protected $fillable = [
         'email',
         'name',
-        'cell_number',
-        'description'
+        'family',
+        'phone',
+        'body',
+        'status'
     ];
 
     protected $hidden = [

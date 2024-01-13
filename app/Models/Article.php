@@ -16,12 +16,20 @@ class Article extends Model
         'category_id',
         'title',
         'slug',
-        'excerpt',
+        'description',
         'body',
+        'images',
         'created_by',
         'is_show',
         'file_id',
+        'view_count',
         'is_future',
+        'seo_title',
+        'seo_description',
+        'seo_follow',
+        'seo_index',
+        'seo_canonical'
+
     ];
 
     public function category(): BelongsTo
@@ -37,16 +45,6 @@ class Article extends Model
     public function thumbnail(): BelongsTo
     {
         return $this->belongsTo(File::class, 'file_id');
-    }
-
-    public function seo(): MorphOne
-    {
-        return $this->morphOne(Seo::class, 'seoable');
-    }
-
-    public function tags(): BelongsToMany
-    {
-        return $this->belongsToMany(Tag::class, 'article_tag');
     }
 
 }
