@@ -27,21 +27,6 @@ class Sizes extends Model
      */
     protected $dates = ['deleted_at'];
 
-//    use Sluggable;
-//    /**
-//     * Return the sluggable configuration array for this model.
-//     *
-//     * @return array
-//     */
-//    public function sluggable()
-//    {
-//        return [
-//            'slug' => [
-//                'source' => 'title'
-//            ]
-//        ];
-//    }
-
     public function category()
     {
         return $this->hasOne('App\ProductCategories', 'id', 'product_categories_id');

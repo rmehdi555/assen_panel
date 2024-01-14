@@ -5,6 +5,8 @@ namespace App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
+use pxlrbt\FilamentExcel\Actions\Pages\ExportAction;
+use pxlrbt\FilamentExcel\Exports\ExcelExport;
 
 class ListProducts extends ListRecords
 {
@@ -14,6 +16,9 @@ class ListProducts extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
+            ExportAction::make()->label('خروجی اکسل')->exports([
+                ExcelExport::make('table')->fromTable(),
+            ])
         ];
     }
 }

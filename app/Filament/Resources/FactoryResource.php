@@ -10,6 +10,7 @@ use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -28,7 +29,7 @@ class FactoryResource extends Resource
 {
     protected static ?string $model = Factories::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-home-modern';
 
     protected static ?string $modelLabel = 'کارخانه ها';
 
@@ -63,6 +64,7 @@ class FactoryResource extends Resource
 
                 Section::make()->schema([
                     TextInput::make('slug')->label('اسلاگ')->unique(ignoreRecord: true)->maxLength(255)->required(),
+                    Select::make('product_categories_id')->relationship('category', 'title')->label('دسته بندی')->required(),
                     FileUpload::make('image_name')->image()->label('تصویر')->imageEditor()->required(),
                     Toggle::make('is_show')->label('وضعیت نمایش')->required(),
                 ])->columnSpan(1),
@@ -91,9 +93,9 @@ class FactoryResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+//                Tables\Actions\BulkActionGroup::make([
+//                    Tables\Actions\DeleteBulkAction::make(),
+//                ]),
             ])
             ->emptyStateActions([
                 Tables\Actions\CreateAction::make(),

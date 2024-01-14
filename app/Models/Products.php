@@ -31,39 +31,25 @@ class Products extends Model
 
      */
     protected $dates = ['deleted_at'];
-//    use Sluggable;
-//    /**
-//     * Return the sluggable configuration array for this model.
-//     *
-//     * @return array
-//     */
-//    public function sluggable()
-//    {
-//        return [
-//            'slug' => [
-//                'source' => 'title'
-//            ]
-//        ];
-//    }
 
     public function category()
     {
-        return $this->hasOne('App\ProductCategories', 'id', 'product_categories_id');
+        return $this->belongsTo(ProductCategories::class, 'product_categories_id', 'id');
     }
 
     public function factoryDetails()
     {
-        return $this->hasOne(Factories::class, 'id', 'factory_id');
+        return $this->belongsTo(Factories::class, 'factory_id', 'id');
     }
 
     public function sizeDetails()
     {
-        return $this->hasOne(Sizes::class, 'id', 'size_id');
+        return $this->belongsTo(Sizes::class, 'size_id', 'id');
     }
 
     public function standardDetails()
     {
-        return $this->hasOne(Standards::class, 'id', 'standard_id');
+        return $this->belongsTo(Standards::class, 'standard_id', 'id');
     }
 
 }
