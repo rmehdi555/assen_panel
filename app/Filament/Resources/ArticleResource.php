@@ -77,7 +77,7 @@ class ArticleResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('title')->label('عنوان')->searchable(),
-                TextColumn::make('view_count')->label('تعداد نمایش'),
+//                TextColumn::make('view_count')->label('تعداد نمایش'),
                 TextColumn::make('link_view_article')->label('نمایش در سایت ')
                     ->url(fn(Article $article) => config('app.front_url') . "/articles/" . "{$article->slug}")
                     ->getStateUsing(fn(Article $article) => "{$article->slug}")

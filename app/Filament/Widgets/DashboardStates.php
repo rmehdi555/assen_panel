@@ -39,7 +39,7 @@ class DashboardStates extends BaseWidget
 
     private function articlesCount(): int
     {
-        return Article::where('status', 1)->count();
+        return Article::where('is_show', 1)->count();
     }
 
     private function usersCount(): int
@@ -48,7 +48,7 @@ class DashboardStates extends BaseWidget
     }
     private function productsCount(): int
     {
-        return Products::where('status', 1)->count();
+        return Products::where('is_show', 1)->count();
     }
 
 //    private function showDollarPrice(): int
