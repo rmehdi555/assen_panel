@@ -30,6 +30,7 @@ class CreateProduct extends CreateRecord
         ]);
         $data['file_id'] = $file->id;
         $data['user_id'] = auth()->id();
+        $data['price_old'] = $data['price'];
         return $data;
     }
 }

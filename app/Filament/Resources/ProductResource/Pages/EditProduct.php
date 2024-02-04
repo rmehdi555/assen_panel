@@ -45,6 +45,7 @@ class EditProduct extends EditRecord
         ]);
         $data['file_id'] = $file->id;
         $data['user_id'] = auth()->id();
+        $data['price_old'] = $this->record->price;
         return $data;
     }
 }

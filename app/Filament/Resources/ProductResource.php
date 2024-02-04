@@ -83,9 +83,9 @@ class ProductResource extends Resource
 
                 Section::make()->schema([
                     TextInput::make('slug')->label('اسلاگ')->unique(ignoreRecord: true)->maxLength(255)->required(),
-                    TextInput::make('price')->label('قیمت ( ریال)')->required()->minValue(0)->mask(RawJs::make('$money($input)')),
-                    TextInput::make('price_usd')->label('قیمت ( دلار)')->required()->minValue(0)->default(0),
-                    TextInput::make('price_euro')->label('قیمت ( یورو)')->required()->minValue(0)->default(0),
+                    TextInput::make('price')->label('قیمت ( ریال)')->required()->minValue(0)->numeric(),
+                    TextInput::make('price_usd')->label('قیمت ( دلار)')->required()->minValue(0)->default(0)->numeric(),
+                    TextInput::make('price_euro')->label('قیمت ( یورو)')->required()->minValue(0)->default(0)->numeric(),
                     Select::make('product_categories_id')->relationship('category', 'title')->label('دسته بندی')->preload()->live()->required(),
                     Select::make('factory_id')->options(fn(GET $get) => Factories::query()->where('product_categories_id', $get('product_categories_id'))->pluck('title', 'id'))->label(' کارخانه')->required(),
 
@@ -133,7 +133,7 @@ class ProductResource extends Resource
                 Tables\Actions\EditAction::make(),
 
                 Action::make('price-update')->form([
-                    TextInput::make('price')->label('قیمت ( ریال)')->required()->minValue(0)->mask(RawJs::make('$money($input)')),
+                    TextInput::make('price')->label('قیمت ( ریال)')->required()->minValue(0)->numeric(),
                 ])->label('برروزرسانی قیمت')->action(function (Products $record, array $data) {
                     self::updateRecord($record, $data);
                     return $record;
@@ -146,7 +146,7 @@ class ProductResource extends Resource
 
                 BulkAction::make('edition')->label('بروزرسانی قیمت گروهی')
                     ->form([
-                        TextInput::make('price')->label('قیمت ( ریال)')->required()->minValue(0)->mask(RawJs::make('$money($input)')),
+                        TextInput::make('price')->label('قیمت ( ریال)')->required()->minValue(0)->numeric(),
                     ])
                     ->action(function (\Illuminate\Database\Eloquent\Collection $records, array $data) {
                         foreach ($records as $record) {
@@ -177,6 +177,7 @@ class ProductResource extends Resource
     private static function updateRecord($record, $data)
     {
         $record->update([
+            'price_old' => $record->price,
             'price' => $data['price'],
         ]);
         return $record;
