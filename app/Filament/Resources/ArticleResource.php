@@ -99,7 +99,7 @@ class ArticleResource extends Resource
             ])
             ->bulkActions([
 //                Tables\Actions\DeleteBulkAction::make(),
-            ]);
+            ])->defaultSort('updated_at', 'desc');
     }
 
     public static function getPages(): array

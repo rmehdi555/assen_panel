@@ -4,7 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\SliderResource\Pages;
 use App\Filament\Resources\SliderResource\RelationManagers;
-use App\Models\Slider;
+use App\Models\Sliders;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
@@ -25,7 +25,7 @@ use Mohamedsabil83\FilamentFormsTinyeditor\Components\TinyEditor;
 
 class SliderResource extends Resource
 {
-    protected static ?string $model = Slider::class;
+    protected static ?string $model = Sliders::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
