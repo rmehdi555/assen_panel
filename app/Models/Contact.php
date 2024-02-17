@@ -9,7 +9,7 @@ class Contact extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'contact_us';
+    protected $table = 'contacts';
 
 
     protected $fillable = [
