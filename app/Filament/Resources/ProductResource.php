@@ -182,4 +182,9 @@ class ProductResource extends Resource
         ]);
         return $record;
     }
+
+    public static function canViewAny(): bool
+    {
+        return auth()->user()->can('product::view');
+    }
 }

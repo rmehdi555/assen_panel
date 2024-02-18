@@ -70,4 +70,10 @@ class ContactResource extends Resource
 //            'edit' => Pages\EditContact::route('/{record}/edit'),
         ];
     }
+
+
+    public static function canViewAny(): bool
+    {
+        return auth()->user()->can('contact::view');
+    }
 }

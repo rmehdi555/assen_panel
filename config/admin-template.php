@@ -16,5 +16,7 @@ return [
         'factory::view',
         'size::view',
         'standard::view',
+        'contact::view',
+        'counseling::view'
     ],
 ];

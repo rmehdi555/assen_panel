@@ -188,8 +188,8 @@ return [
     ])->toArray(),
 
 
-    'admin_site_url_file' =>  'http://panel.bitnasb.ir/storage/',
-    'front_url' => 'http://bitnasb.ir',
-    'app_url' => 'http://app.bitnasb.ir/api/v1'
+    'admin_site_url_file' =>  'https://panel.assen.ir/storage/',
+    'front_url' => 'https://assen.ir',
+    'app_url' => 'https://app.assen.ir/api/v1'
 
 ];
