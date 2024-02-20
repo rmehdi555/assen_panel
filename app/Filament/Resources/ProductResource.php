@@ -114,6 +114,7 @@ class ProductResource extends Resource
                 TextColumn::make('sizeDetails.title')->label('سایز'),
                 TextColumn::make('standardDetails.title')->label('استاندارد'),
                 TextColumn::make('price')->label('قیمت'),
+                TextColumn::make('updated_at')->label('تاریخ بروزرسانی')->jalaliDate(),
                 IconColumn::make('is_show')->label('وضعیت نمایش')->boolean(),
             ])
             ->filters([
@@ -133,7 +134,7 @@ class ProductResource extends Resource
                 Tables\Actions\EditAction::make(),
 
                 Action::make('price-update')->form([
-                    TextInput::make('price')->label('قیمت ( ریال)')->required()->minValue(0)->numeric(),
+                    TextInput::make('price')->label('قیمت ( ریال)')->required()->minValue(0)->numeric()->default(fn(Products $record)=> $record->price),
                 ])->label('برروزرسانی قیمت')->action(function (Products $record, array $data) {
                     self::updateRecord($record, $data);
                     return $record;
