@@ -20,6 +20,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Mohamedsabil83\FilamentFormsTinyeditor\Components\TinyEditor;
 
 class ArticleResource extends Resource
@@ -91,6 +92,18 @@ class ArticleResource extends Resource
             ])
             ->filters([
                 SelectFilter::make('category')->label('دسته بندی')->relationship('category', 'title'),
+                Filter::make('title')->form([
+                    TextInput::make('title')->label('عنوان'),
+                ])->query(fn(Builder $query, array $data): Builder => $query->when(
+                    $data['title'],
+                    fn(Builder $query, $data): Builder => $query->where('articles.title', 'like', '%' . $data . '%'),
+                )),
+                Filter::make('slug')->form([
+                    TextInput::make('slug')->label('اسلاگ'),
+                ])->query(fn(Builder $query, array $data): Builder => $query->when(
+                    $data['slug'],
+                    fn(Builder $query, $data): Builder => $query->where('articles.slug', 'like', '%' . $data . '%'),
+                )),
                 Filter::make('is_show')->label('وضعیت نمایش')->toggle(),
             ])
             ->actions([

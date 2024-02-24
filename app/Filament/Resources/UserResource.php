@@ -63,6 +63,7 @@ class UserResource extends Resource
             ->columns([
                 TextColumn::make('id')->label('آی دی'),
                 TextColumn::make('name')->label('نام'),
+                TextColumn::make('family')->label('نام خانوادگی'),
                 TextColumn::make('email')->label('ایمیل'),
                 TextColumn::make('created_at')->label('تاریخ ثبت نام'),
                 TextColumn::make('cell_number')->label('شماره موبایل'),

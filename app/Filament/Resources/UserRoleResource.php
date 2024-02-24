@@ -44,6 +44,7 @@ class UserRoleResource extends Resource
             ->columns([
                 TextColumn::make('id')->label('آی دی'),
                 TextColumn::make('name')->label('نام'),
+                TextColumn::make('family')->label('نام خانوادگی'),
                 TextColumn::make('email')->label('ایمیل'),
                 TextColumn::make('cell_number')->label('شماره موبایل'),
                 TextColumn::make('roles.name')->label('نقش'),
