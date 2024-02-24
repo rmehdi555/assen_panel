@@ -44,7 +44,7 @@ class ArticleResource extends Resource
 
                     Grid::make(1)->schema([
                         Grid::make(1)->schema([
-                            TextInput::make('title')->label('عنوان')->columnSpan(2)->required(),
+                            TextInput::make('title')->label('عنوان نمایش دهنده گوگل')->columnSpan(2)->required(),
                         ]),
 
                         Section::make()->schema([
@@ -76,7 +76,7 @@ class ArticleResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('title')->label('عنوان')->searchable(),
+                TextColumn::make('title')->label('عنوان نمایش دهنده گوگل')->searchable(),
 //                TextColumn::make('view_count')->label('تعداد نمایش'),
                 TextColumn::make('link_view_article')->label('نمایش در سایت ')
                     ->url(fn(Article $article) => config('app.front_url') . "/articles/" . "{$article->slug}")
@@ -99,7 +99,7 @@ class ArticleResource extends Resource
             ])
             ->bulkActions([
 //                Tables\Actions\DeleteBulkAction::make(),
-            ])->defaultSort('updated_at', 'desc');
+            ])->defaultSort('created_at', 'desc');
     }
 
     public static function getPages(): array

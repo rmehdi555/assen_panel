@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Factories extends Model
@@ -27,8 +28,8 @@ class Factories extends Model
      */
     protected $dates = ['deleted_at'];
 
-    public function category()
+    public function category(): BelongsTo
     {
-        return $this->hasOne('App\ProductCategories', 'id', 'product_categories_id');
+        return $this->belongsTo(ProductCategories::class, 'product_categories_id', 'id');
     }
 }
