@@ -68,7 +68,7 @@ class ProductResource extends Resource
 
                     Section::make()->schema([
                         Textarea::make('description')->label('خلاصه')->maxLength(65535)->required(),
-                        TinyEditor::make('body')->label('متن')->fileAttachmentsDisk('public')->fileAttachmentsVisibility('public')->fileAttachmentsDirectory('uploads')->required(),
+                        TinyEditor::make('body')->label('متن')->fileAttachmentsDisk('public')->fileAttachmentsVisibility('public')->fileAttachmentsDirectory('uploads')->required()->maxHeight(500),
                     ]),
 
                     Section::make('سئو')->schema([

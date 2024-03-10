@@ -49,7 +49,7 @@ class SizeResource extends Resource
                     ]),
 
                     Section::make()->schema([
-                        TinyEditor::make('body')->label('متن')->fileAttachmentsDisk('public')->fileAttachmentsVisibility('public')->fileAttachmentsDirectory('uploads')->required(),
+                        TinyEditor::make('body')->label('متن')->fileAttachmentsDisk('public')->fileAttachmentsVisibility('public')->fileAttachmentsDirectory('uploads')->required()->maxHeight(500),
                     ]),
 
                     Section::make('سئو')->schema([

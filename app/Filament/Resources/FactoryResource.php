@@ -49,7 +49,7 @@ class FactoryResource extends Resource
                     ]),
 
                     Section::make()->schema([
-                        TinyEditor::make('body')->label('متن')->fileAttachmentsDisk('public')->fileAttachmentsVisibility('public')->fileAttachmentsDirectory('uploads')->required(),
+                        TinyEditor::make('body')->label('متن')->fileAttachmentsDisk('public')->fileAttachmentsVisibility('public')->fileAttachmentsDirectory('uploads')->required()->maxHeight(500),
                     ]),
 
                     Section::make('سئو')->schema([
@@ -65,6 +65,7 @@ class FactoryResource extends Resource
                 Section::make()->schema([
                     TextInput::make('slug')->label('اسلاگ')->unique(ignoreRecord: true)->maxLength(255)->required(),
                     Select::make('product_categories_id')->relationship('category', 'title')->label('دسته بندی')->required(),
+                    TextInput::make('priority')->label('اولویت نمایش')->numeric(),
                     FileUpload::make('image_name')->image()->label('تصویر')->imageEditor()->required(),
                     Toggle::make('is_show')->label('وضعیت نمایش')->required(),
                 ])->columnSpan(1),
@@ -78,6 +79,7 @@ class FactoryResource extends Resource
             ->columns([
                 TextColumn::make('title')->label('نام'),
                 TextColumn::make('slug')->label('اسلاگ'),
+                TextColumn::make('priority')->label('اولویت نمایش')->sortable(),
                 IconColumn::make('is_show')->label('وضعیت نمایش')->boolean(),
             ])
             ->filters([
