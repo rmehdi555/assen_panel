@@ -157,7 +157,7 @@ class ProductResource extends Resource
                         }
                         return $records;
                     })
-            ]);
+            ])->defaultPaginationPageOption(25);
     }
 
     public static function getRelations(): array
