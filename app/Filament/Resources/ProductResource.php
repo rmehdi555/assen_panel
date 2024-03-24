@@ -96,6 +96,7 @@ class ProductResource extends Resource
                             'store' => 'انبار',
                             'factory' => 'کارخانه',
                         ])->default('factory'),
+                    TextInput::make('priority')->label('اولویت نمایش')->numeric()->required(),
                     FileUpload::make('image_name')->image()->label('تصویر')->imageEditor()->required(),
                     Toggle::make('is_show')->label('وضعیت نمایش')->required(),
                 ])->columnSpan(1),
@@ -114,6 +115,7 @@ class ProductResource extends Resource
                 TextColumn::make('sizeDetails.title')->label('سایز'),
                 TextColumn::make('standardDetails.title')->label('استاندارد'),
                 TextColumn::make('price')->label('قیمت'),
+                TextColumn::make('priority')->label('اولویت نمایش')->sortable(),
                 TextColumn::make('updated_at')->label('تاریخ بروزرسانی')->jalaliDate(),
                 IconColumn::make('is_show')->label('وضعیت نمایش')->boolean(),
             ])

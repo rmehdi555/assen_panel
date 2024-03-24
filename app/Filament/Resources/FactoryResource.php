@@ -65,7 +65,7 @@ class FactoryResource extends Resource
                 Section::make()->schema([
                     TextInput::make('slug')->label('اسلاگ')->unique(ignoreRecord: true)->maxLength(255)->required(),
                     Select::make('product_categories_id')->relationship('category', 'title')->label('دسته بندی')->required(),
-                    TextInput::make('priority')->label('اولویت نمایش')->numeric(),
+                    TextInput::make('priority')->label('اولویت نمایش')->numeric()->required(),
                     FileUpload::make('image_name')->image()->label('تصویر')->imageEditor()->required(),
                     Toggle::make('is_show')->label('وضعیت نمایش')->required(),
                 ])->columnSpan(1),
