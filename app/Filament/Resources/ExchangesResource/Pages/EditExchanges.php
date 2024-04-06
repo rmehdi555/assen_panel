@@ -1,0 +1,18 @@
+<?php
+
+namespace App\Filament\Resources\ExchangesResource\Pages;
+
+use App\Filament\Resources\ExchangesResource;
+use Filament\Actions;
+use Filament\Resources\Pages\EditRecord;
+
+class EditExchanges extends EditRecord
+{
+    protected static string $resource = ExchangesResource::class;
+
+    protected function getHeaderActions(): array
+    {
+        return [
+        ];
+    }
+}
