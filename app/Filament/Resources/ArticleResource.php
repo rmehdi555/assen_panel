@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ArticleResource\Pages;
 use App\Models\Article;
+use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\RichEditor;
@@ -67,6 +68,7 @@ class ArticleResource extends Resource
                         TextInput::make('slug')->label('اسلاگ')->unique(ignoreRecord: true)->maxLength(255)->required(),
                         Select::make('category_id')->relationship('category', 'title')->label('دسته بندی')->required(),
                         FileUpload::make('image_name')->image()->label('تصویر')->imageEditor()->required(),
+                        DateTimePicker::make('published_at')->label('تاریخ انتشار')->required(),
                         Toggle::make('is_show')->label('وضعیت نمایش')->required(),
                     ])->columnSpan(1),
                 ]),
@@ -88,6 +90,7 @@ class ArticleResource extends Resource
                 TextColumn::make('category.title')->label('دسته بندی'),
                 TextColumn::make('author.name')->label('نویسنده'),
                 IconColumn::make('is_show')->label('وضعیت نمایش')->boolean(),
+                TextColumn::make('published_at')->label('تاریخ انتشار')->dateTime(),
                 TextColumn::make('created_at')->label('ایجاد در')->dateTime(),
             ])
             ->filters([

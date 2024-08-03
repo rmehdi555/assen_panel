@@ -29,7 +29,8 @@ class Article extends Model
         'seo_description',
         'seo_follow',
         'seo_index',
-        'seo_canonical'
+        'seo_canonical',
+        'published_at'
 
     ];
 
