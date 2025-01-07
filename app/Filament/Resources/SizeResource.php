@@ -45,7 +45,8 @@ class SizeResource extends Resource
             Grid::make(3)->schema([
                 Grid::make(1)->schema([
                     Grid::make(1)->schema([
-                        TextInput::make('title')->required()->label('نام')->maxLength(255),
+                        TextInput::make('title')->required()->label('عنوان')->maxLength(255),
+                        TextInput::make('title_h1')->required()->label('عنوان h1 :')->maxLength(255),
                     ]),
 
                     Section::make()->schema([

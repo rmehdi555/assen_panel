@@ -10,21 +10,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Factories extends Model
 {
     use SoftDeletes;
+
     protected $fillable = [
-        'title','body','slug','images','priority','is_show','product_categories_id','tag_title','user_id','file_id',
-        'seo_title','seo_description','seo_follow','seo_index','seo_canonical','schema'
+        'title', 'title_h1', 'body', 'slug', 'images', 'priority', 'is_show', 'product_categories_id', 'tag_title', 'user_id', 'file_id',
+        'seo_title', 'seo_description', 'seo_follow', 'seo_index', 'seo_canonical', 'schema'
     ];
     protected $casts = [
         'images' => 'array'
     ];
     /**
-
      * The attributes that should be mutated to dates.
-
      *
-
      * @var array
-
      */
     protected $dates = ['deleted_at'];
 

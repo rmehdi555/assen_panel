@@ -16,6 +16,7 @@ class ProductCategories extends Model
     use SoftDeletes;
     protected $fillable = [
         'title',
+        'title_h1',
         'slug',
         'description',
         'body',

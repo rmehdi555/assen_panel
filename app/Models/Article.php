@@ -30,6 +30,8 @@ class Article extends Model
         'seo_follow',
         'seo_index',
         'seo_canonical',
+        'seo_keyword',
+        'seo_words_concept',
         'published_at'
 
     ];

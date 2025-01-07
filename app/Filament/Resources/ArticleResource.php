@@ -60,6 +60,8 @@ class ArticleResource extends Resource
                             Toggle::make('seo_follow')->label('follow'),
                             Toggle::make('seo_index')->label('index'),
                             TextInput::make('seo_canonical')->label('canonical'),
+                            TextInput::make('seo_keyword')->label('کلمه کلیدی '),
+                            TextInput::make('seo_words_concept')->label('کلمات هم کانسپت '),
                         ])->collapsed(),
 
                     ])->columnSpan(2),

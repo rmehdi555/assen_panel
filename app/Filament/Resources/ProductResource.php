@@ -108,7 +108,8 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('title')->label('نام'),
+                TextColumn::make('title')->label('عنوان'),
+                TextInput::make('title_h1')->required()->label('عنوان h1 :')->maxLength(255),
 //                TextColumn::make('slug')->label('اسلاگ'),
                 TextColumn::make('category.title')->label('دسته بندی'),
                 TextColumn::make('factoryDetails.title')->label('کارخانه'),
