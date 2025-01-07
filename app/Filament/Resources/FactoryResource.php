@@ -78,7 +78,7 @@ class FactoryResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('title')->label('نام'),
+                TextColumn::make('title')->label('عنوان'),
                 TextColumn::make('slug')->label('اسلاگ'),
                 TextColumn::make('priority')->label('اولویت نمایش')->sortable(),
                 IconColumn::make('is_show')->label('وضعیت نمایش')->boolean(),

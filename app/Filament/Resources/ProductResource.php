@@ -63,7 +63,8 @@ class ProductResource extends Resource
             Grid::make(3)->schema([
                 Grid::make(1)->schema([
                     Grid::make(1)->schema([
-                        TextInput::make('title')->required()->label('نام')->maxLength(255),
+                        TextInput::make('title')->required()->label('عنوان')->maxLength(255),
+                        TextInput::make('title_h1')->required()->label('عنوان h1 :')->maxLength(255),
                     ]),
 
                     Section::make()->schema([
@@ -109,7 +110,6 @@ class ProductResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('title')->label('عنوان'),
-                TextInput::make('title_h1')->required()->label('عنوان h1 :')->maxLength(255),
 //                TextColumn::make('slug')->label('اسلاگ'),
                 TextColumn::make('category.title')->label('دسته بندی'),
                 TextColumn::make('factoryDetails.title')->label('کارخانه'),

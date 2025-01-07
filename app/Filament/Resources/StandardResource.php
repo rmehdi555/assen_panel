@@ -77,7 +77,7 @@ class StandardResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('title')->label('نام'),
+                TextColumn::make('title')->label('عنوان'),
                 TextColumn::make('slug')->label('اسلاگ'),
                 IconColumn::make('is_show')->label('وضعیت نمایش')->boolean(),
             ])
