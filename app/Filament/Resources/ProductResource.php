@@ -100,6 +100,7 @@ class ProductResource extends Resource
                     TextInput::make('priority')->label('اولویت نمایش')->numeric()->required(),
                     FileUpload::make('image_name')->image()->label('تصویر')->imageEditor()->required(),
                     Toggle::make('is_show')->label('وضعیت نمایش')->required(),
+                    Toggle::make('is_show_price')->label(' وضعیت نمایش قیمت')->required(),
                 ])->columnSpan(1),
             ]),
         ]);
@@ -119,6 +120,7 @@ class ProductResource extends Resource
                 TextColumn::make('priority')->label('اولویت نمایش')->sortable(),
                 TextColumn::make('updated_at')->label('تاریخ بروزرسانی')->jalaliDate(),
                 IconColumn::make('is_show')->label('وضعیت نمایش')->boolean(),
+                IconColumn::make('is_show_price')->label('وضعیت نمایش قیمت')->boolean(),
             ])
             ->filters([
                 Filter::make('title')->form([
@@ -132,6 +134,7 @@ class ProductResource extends Resource
                 SelectFilter::make('size')->label('سایز')->relationship('sizeDetails', 'title'),
                 SelectFilter::make('standard')->label('استاندارد')->relationship('standardDetails', 'title'),
                 Filter::make('is_show')->label('وضعیت نمایش')->toggle(),
+                Filter::make('is_show_price')->label('وضعیت نمایش قیمت')->toggle(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
