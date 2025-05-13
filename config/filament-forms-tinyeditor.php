@@ -18,6 +18,15 @@ return [
             'upload_directory' => null,
             'custom_configs' => [
                 'font_formats' => 'IRANSans=iran-sans; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Tahoma=tahoma,arial,helvetica,sans-serif;',
+                'fontsize_formats' => '8pt 10pt 12pt 14pt 16pt 18pt 20pt 22pt 24pt 26pt 28pt 30pt 32pt 34pt 36pt 48pt 72pt',
+                'content_style' => '
+                                        h1 { font-size: 24pt !important; }
+                                        h2 { font-size: 22pt !important; }
+                                        h3 { font-size: 20pt !important; }
+                                        h4 { font-size: 18pt !important; }
+                                        h5 { font-size: 16pt !important; }
+                                        h6 { font-size: 14pt !important; }
+                                    '
             ],
         ],
 
