@@ -23,9 +23,10 @@ return [
                                         h1 { font-size: 24pt !important; }
                                         h2 { font-size: 22pt !important; }
                                         h3 { font-size: 20pt !important; }
-                                        h4 { font-size: 18pt !important; }
-                                        h5 { font-size: 16pt !important; }
-                                        h6 { font-size: 14pt !important; }
+                                        h4 { font-size: 16pt !important; }
+                                        h5 { font-size: 14pt !important; }
+                                        h6 { font-size: 12pt !important; }
+                                        p + h1, p + h2, p + h3, p + h4, p + h5, p + h6 { margin-top: 20px; }
                                     '
             ],
         ],
