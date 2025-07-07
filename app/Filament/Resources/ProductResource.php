@@ -101,6 +101,15 @@ class ProductResource extends Resource
                     FileUpload::make('image_name')->image()->label('تصویر')->imageEditor()->required(),
                     Toggle::make('is_show')->label('وضعیت نمایش')->required(),
                     Toggle::make('is_show_price')->label(' وضعیت نمایش قیمت')->required(),
+                    Select::make('detail_state')->label('حالت (ورق سیاه)')
+                        ->options([
+                            '' => 'بدون انتخاب',
+                            'رول' => 'رول',
+                            'برش خورده ' => 'برش خورده ',
+                            'فابریک' => 'فابریک'
+                        ])->default('factory'),
+                    TextInput::make('detail_width')->label('ضخامت ( ورق سیاه و نبشی )')->nullable(),
+                    TextInput::make('detail_length')->label('طول ( نبشی )')->nullable(),
                 ])->columnSpan(1),
             ]),
         ]);
