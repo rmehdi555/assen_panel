@@ -90,7 +90,7 @@ class ProductResource extends Resource
                     Select::make('product_categories_id')->relationship('category', 'title')->label('دسته بندی')->preload()->live()->required(),
                     Select::make('factory_id')->options(fn(GET $get) => Factories::query()->where('product_categories_id', $get('product_categories_id'))->pluck('title', 'id'))->label(' کارخانه')->required(),
 
-                    Select::make('size_id')->options(fn(GET $get) => Sizes::query()->where('product_categories_id', $get('product_categories_id'))->pluck('title', 'id'))->label(' سایز')->required(),
+                    Select::make('size_id')->options(fn(GET $get) => Sizes::query()->where('product_categories_id', $get('product_categories_id'))->pluck('title', 'id'))->label(' سایز (ابعاد)')->required(),
                     Select::make('standard_id')->options(fn(GET $get) => Standards::query()->where('product_categories_id', $get('product_categories_id'))->pluck('title', 'id'))->label('استاندارد ')->required(),
                     Select::make('place_of_delivery')->label('محل تحویل')
                         ->options([
@@ -123,7 +123,7 @@ class ProductResource extends Resource
 //                TextColumn::make('slug')->label('اسلاگ'),
                 TextColumn::make('category.title')->label('دسته بندی'),
                 TextColumn::make('factoryDetails.title')->label('کارخانه'),
-                TextColumn::make('sizeDetails.title')->label('سایز'),
+                TextColumn::make('sizeDetails.title')->label('سایز (ابعاد)'),
                 TextColumn::make('standardDetails.title')->label('استاندارد'),
                 TextColumn::make('price')->label('قیمت'),
                 TextColumn::make('priority')->label('اولویت نمایش')->sortable(),
@@ -140,7 +140,7 @@ class ProductResource extends Resource
                 )),
                 SelectFilter::make('category')->label('دسته بندی')->relationship('category', 'title'),
                 SelectFilter::make('factory')->label('کارخانه')->relationship('factoryDetails', 'title'),
-                SelectFilter::make('size')->label('سایز')->relationship('sizeDetails', 'title'),
+                SelectFilter::make('size')->label('سایز (ابعاد)')->relationship('sizeDetails', 'title'),
                 SelectFilter::make('standard')->label('استاندارد')->relationship('standardDetails', 'title'),
                 Filter::make('is_show')->label('وضعیت نمایش')->toggle(),
                 Filter::make('is_show_price')->label('وضعیت نمایش قیمت')->toggle(),
