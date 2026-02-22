@@ -9,7 +9,10 @@ use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\Support\Enums\Width;
+use Filament\Support\Facades\FilamentView;
 use Filament\Widgets;
+use Illuminate\Support\HtmlString;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -20,6 +23,13 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class AdminPanelProvider extends PanelProvider
 {
+    public function boot(): void
+    {
+        FilamentView::registerRenderHook('panels::head.end', fn (): HtmlString => new HtmlString(
+            '<link rel="stylesheet" href="' . asset('css/filament-admin-custom.css') . '">'
+        ));
+    }
+
     public function panel(Panel $panel): Panel
     {
         return $panel
@@ -72,11 +82,11 @@ class AdminPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
-            ->viteTheme('resources/css/filament/admin/theme.css')
+            // ->viteTheme('resources/css/filament/admin/theme.css') // غیرفعال؛ از تم پیش‌ساخته Filament 5 استفاده می‌شود
             ->authMiddleware([
                 Authenticate::class,
             ])
-            ->maxContentWidth('full')
+            ->maxContentWidth(Width::Full)
             ->navigationGroups([
                 'لاجیستیک',
                 'جستجو',

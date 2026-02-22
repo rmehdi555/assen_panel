@@ -7,15 +7,14 @@ use App\Filament\Resources\ExchangesResource\RelationManagers;
 use App\Models\Exchanges;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Filament\Actions\EditAction;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -23,7 +22,7 @@ class ExchangesResource extends Resource
 {
     protected static ?string $model = Exchanges::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
+    protected static \BackedEnum|string|null $navigationIcon = 'heroicon-o-currency-dollar';
 
     protected static ?string $modelLabel = 'قیمت ارز ها';
 
@@ -31,23 +30,14 @@ class ExchangesResource extends Resource
 
     protected static ?int $navigationSort = 5;
 
-    protected static ?string $navigationGroup = 'تنظیمات';
+    protected static \UnitEnum|string|null $navigationGroup = 'تنظیمات';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
-                Grid::make(3)->schema([
-
-                    Grid::make(1)->schema([
-                        Grid::make(1)->schema([
-                            TextInput::make('name')->label('عنوان')->columnSpan(2)->required(),
-                        ]),
-                        Grid::make(1)->schema([
-                            TextInput::make('value')->label('قیمت (ریال)')->columnSpan(2)->numeric()->required(),
-                        ]),
-                    ])->columnSpan(2),
-                ]),
+                TextInput::make('name')->label('عنوان')->required(),
+                TextInput::make('value')->label('قیمت (ریال)')->numeric()->required(),
             ]);
     }
 
@@ -62,12 +52,9 @@ class ExchangesResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                ]),
-            ]);
+            ->bulkActions([]);
     }
 
     public static function getRelations(): array

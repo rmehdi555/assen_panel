@@ -11,7 +11,7 @@ use App\Models\Transaction;
 use App\Models\User;
 use Carbon\Carbon;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
-use Filament\Widgets\StatsOverviewWidget\Card;
+use Filament\Widgets\StatsOverviewWidget\Stat;
 use PhpOffice\PhpSpreadsheet\Calculation\Database\DProduct;
 
 class DashboardStates extends BaseWidget
@@ -19,19 +19,19 @@ class DashboardStates extends BaseWidget
     protected function getCards(): array
     {
         return [
-            Card::make('تعداد مقالات', number_format($this->articlesCount()))
+            Stat::make('تعداد مقالات', number_format($this->articlesCount()))
                 ->icon('heroicon-o-check')
                 ->color('success'),
-            Card::make('تعداد کاربران', number_format($this->usersCount()))
+            Stat::make('تعداد کاربران', number_format($this->usersCount()))
                 ->icon('heroicon-o-arrow-trending-up')
                 ->color('success'),
-            Card::make('تعداد محصولات سایت', number_format($this->productsCount()))
+            Stat::make('تعداد محصولات سایت', number_format($this->productsCount()))
                 ->icon('heroicon-o-arrow-trending-up')
                 ->color('success'),
-//            Card::make('قیمت امروز دلار (ریال)', number_format($this->showDollarPrice()))
+//            Stat::make('قیمت امروز دلار (ریال)', number_format($this->showDollarPrice()))
 //                ->icon('heroicon-o-clipboard-document-list')
 //                ->color('success'),
-//            Card::make('تعداد تیکت های بسته نشده', $this->tickets())
+//            Stat::make('تعداد تیکت های بسته نشده', $this->tickets())
 //                ->icon('heroicon-o-exclamation-triangle')
 //                ->color('success')
         ];

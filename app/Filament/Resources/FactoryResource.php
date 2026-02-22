@@ -8,28 +8,29 @@ use App\Models\Factories;
 use App\Models\Factory;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Section;
+use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
+use Filament\Actions\CreateAction;
+use Filament\Actions\EditAction;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Mohamedsabil83\FilamentFormsTinyeditor\Components\TinyEditor;
+use AmidEsfahani\FilamentTinyEditor\TinyEditor;
 
 class FactoryResource extends Resource
 {
     protected static ?string $model = Factories::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-home-modern';
+    protected static \BackedEnum|string|null $navigationIcon = 'heroicon-o-home-modern';
 
     protected static ?string $modelLabel = 'کارخانه ها';
 
@@ -37,40 +38,30 @@ class FactoryResource extends Resource
 
     protected static ?int $navigationSort = 3;
 
-    protected static ?string $navigationGroup = 'محصولات';
+    protected static \UnitEnum|string|null $navigationGroup = 'محصولات';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form->schema([
-            Grid::make(3)->schema([
-                Grid::make(1)->schema([
-                    Grid::make(1)->schema([
-                        TextInput::make('title')->required()->label('عنوان')->maxLength(255),
-                        TextInput::make('title_h1')->required()->label('عنوان h1 :')->maxLength(255),
-                    ]),
-
-                    Section::make()->schema([
-                        TinyEditor::make('body')->label('متن')->fileAttachmentsDisk('public')->fileAttachmentsVisibility('public')->fileAttachmentsDirectory('uploads')->required()->maxHeight(500),
-                    ]),
-
-                    Section::make('سئو')->schema([
-                        TextInput::make('seo_title')->label('تایتل صفحه')->maxLength(255),
-                        Textarea::make('seo_description')->label('توضیحات صفحه')->maxLength(65535),
-                        Toggle::make('seo_follow')->label('follow'),
-                        Toggle::make('seo_index')->label('index'),
-                        TextInput::make('seo_canonical')->label('canonical'),
-                    ])->collapsed(),
-
-                ])->columnSpan(2),
-
-                Section::make()->schema([
-                    TextInput::make('slug')->label('اسلاگ')->unique(ignoreRecord: true)->maxLength(255)->required(),
-                    Select::make('product_categories_id')->relationship('category', 'title')->label('دسته بندی')->required(),
-                    TextInput::make('priority')->label('اولویت نمایش')->numeric()->required(),
-                    FileUpload::make('image_name')->image()->label('تصویر')->imageEditor()->required(),
-                    Toggle::make('is_show')->label('وضعیت نمایش')->required(),
-                ])->columnSpan(1),
-            ]),
+        return $schema->columns(3)->schema([
+            Section::make()->schema([
+                TextInput::make('title')->required()->label('عنوان')->maxLength(255),
+                TextInput::make('title_h1')->required()->label('عنوان h1 :')->maxLength(255),
+                TinyEditor::make('body')->label('متن')->fileAttachmentsDisk('public')->fileAttachmentsVisibility('public')->fileAttachmentsDirectory('uploads')->required()->maxHeight(500),
+                Section::make('سئو')->schema([
+                    TextInput::make('seo_title')->label('تایتل صفحه')->maxLength(255),
+                    Textarea::make('seo_description')->label('توضیحات صفحه')->maxLength(65535),
+                    Toggle::make('seo_follow')->label('follow'),
+                    Toggle::make('seo_index')->label('index'),
+                    TextInput::make('seo_canonical')->label('canonical'),
+                ])->collapsed(),
+            ])->columnSpan(2)->columns(1),
+            Section::make()->schema([
+                TextInput::make('slug')->label('اسلاگ')->unique(ignoreRecord: true)->maxLength(255)->required(),
+                Select::make('product_categories_id')->relationship('category', 'title')->label('دسته بندی')->required(),
+                TextInput::make('priority')->label('اولویت نمایش')->numeric()->required(),
+                FileUpload::make('image_name')->image()->label('تصویر')->imageEditor()->required(),
+                Toggle::make('is_show')->label('وضعیت نمایش')->required(),
+            ])->columnSpan(1)->columns(1),
         ]);
     }
 
@@ -93,7 +84,7 @@ class FactoryResource extends Resource
                 )),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                EditAction::make(),
             ])
             ->bulkActions([
 //                Tables\Actions\BulkActionGroup::make([
@@ -101,7 +92,7 @@ class FactoryResource extends Resource
 //                ]),
             ])
             ->emptyStateActions([
-                Tables\Actions\CreateAction::make(),
+                CreateAction::make(),
             ]);
     }
 

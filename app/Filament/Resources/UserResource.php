@@ -9,19 +9,18 @@ use App\Models\Invoice;
 use App\Models\Transaction;
 use App\Models\User;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Hidden;
-use Filament\Forms\Components\Section;
+use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Support\RawJs;
 use Filament\Tables\Table;
 use Filament\Tables;
-use Filament\Tables\Actions\Action;
+use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Illuminate\Database\Eloquent\Builder;
@@ -31,7 +30,7 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-user';
+    protected static \BackedEnum|string|null $navigationIcon = 'heroicon-o-user';
 
     protected static ?string $modelLabel = 'کاربر';
 
@@ -39,20 +38,18 @@ class UserResource extends Resource
 
     protected static ?string $slug = 'users';
 
-    protected static ?string $navigationGroup = 'مدیریت کاربران';
+    protected static \UnitEnum|string|null $navigationGroup = 'مدیریت کاربران';
 
     protected static ?int $navigationSort = 1;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form->schema([
+        return $schema->schema([
             Section::make()->schema([
-                Grid::make(1)->schema([
-                    TextInput::make('name')->label('نام')->required(),
-                    TextInput::make('family')->label('نام خانوادگی')->required(),
-                    TextInput::make('email')->label('ایمیل')->required()->email(),
-                    TextInput::make('cell_number')->label('شماره موبایل')->required()->numeric()->minLength(11),
-                ]),
+                TextInput::make('name')->label('نام')->required(),
+                TextInput::make('family')->label('نام خانوادگی')->required(),
+                TextInput::make('email')->label('ایمیل')->required()->email(),
+                TextInput::make('cell_number')->label('شماره موبایل')->required()->numeric()->minLength(11),
             ]),
         ]);
     }
@@ -99,7 +96,7 @@ class UserResource extends Resource
 
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                EditAction::make(),
             ])
             ->bulkActions([])
             ->defaultSort('id', 'desc');

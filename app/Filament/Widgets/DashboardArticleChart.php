@@ -10,7 +10,7 @@ use Flowframe\Trend\TrendValue;
 
 class DashboardArticleChart extends LineChartWidget
 {
-    protected static ?string $heading = 'تعداد مقالات به تفکیک ماه';
+    protected ?string $heading = 'تعداد مقالات به تفکیک ماه';
 
     protected function getData(): array
     {

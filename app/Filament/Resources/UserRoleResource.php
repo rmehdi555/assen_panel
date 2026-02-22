@@ -6,11 +6,11 @@ use App\Filament\Resources\UserRoleResource\Pages;
 use App\Models\User;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
-use Filament\Tables\Actions\Action;
+use Filament\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Hash;
@@ -19,7 +19,7 @@ class UserRoleResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-shield-exclamation';
+    protected static \BackedEnum|string|null $navigationIcon = 'heroicon-o-shield-exclamation';
 
     protected static ?string $modelLabel = 'نقش کاربران';
 
@@ -27,13 +27,13 @@ class UserRoleResource extends Resource
 
     protected static ?string $slug = 'user-role';
 
-    protected static ?string $navigationGroup = 'مدیریت کاربران';
+    protected static \UnitEnum|string|null $navigationGroup = 'مدیریت کاربران';
 
     protected static ?int $navigationSort = 2;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form->schema([
+        return $schema->schema([
             //
         ]);
     }

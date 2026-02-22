@@ -6,8 +6,8 @@ use App\Filament\Resources\CounselingResource\Pages;
 use App\Filament\Resources\CounselingResource\RelationManagers;
 use App\Models\Counseling;
 use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -18,7 +18,7 @@ class CounselingResource extends Resource
 {
     protected static ?string $model = Counseling::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static \BackedEnum|string|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $modelLabel = 'پیام درخواست مشاوره';
 
@@ -26,13 +26,13 @@ class CounselingResource extends Resource
 
     protected static ?string $slug = 'counseling';
 
-    protected static ?string $navigationGroup = 'مدیریت کاربران';
+    protected static \UnitEnum|string|null $navigationGroup = 'مدیریت کاربران';
 
     protected static ?int $navigationSort = 7;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 //
             ]);
@@ -53,11 +53,7 @@ class CounselingResource extends Resource
             ->actions([
 //                Tables\Actions\EditAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-//                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+            ->bulkActions([]);
     }
 
     public static function getRelations(): array

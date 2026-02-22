@@ -3,14 +3,15 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\RoleResource\Pages;
-use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Filament\Tables;
-use Filament\Tables\Actions\Action;
+use Filament\Actions\Action;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Spatie\Permission\Models\Role;
 
@@ -18,7 +19,7 @@ class RoleResource extends Resource
 {
     protected static ?string $model = Role::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-shield-check';
+    protected static \BackedEnum|string|null $navigationIcon = 'heroicon-o-shield-check';
 
     protected static ?string $modelLabel = 'نقش';
 
@@ -26,16 +27,14 @@ class RoleResource extends Resource
 
     protected static ?string $slug = 'roles';
 
-    protected static ?string $navigationGroup = 'مدیریت کاربران';
+    protected static \UnitEnum|string|null $navigationGroup = 'مدیریت کاربران';
 
     protected static ?int $navigationSort = 3;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form->schema([
-            Grid::make(1)->schema([
-                TextInput::make('name')->label('نام')->required(),
-            ]),
+        return $schema->schema([
+            TextInput::make('name')->label('نام')->required(),
         ]);
     }
 
@@ -49,7 +48,7 @@ class RoleResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                EditAction::make(),
 
                 Action::make('permissions')
                     ->label('دسترسی ها')
@@ -66,7 +65,7 @@ class RoleResource extends Resource
                     ->action(fn(Role $record, array $data) => $record),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                DeleteBulkAction::make(),
             ]);
     }
 

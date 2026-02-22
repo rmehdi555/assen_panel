@@ -16,22 +16,21 @@ use App\Models\Standards;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\MorphToSelect;
-use Filament\Forms\Components\Section;
+use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Form;
-use Filament\Forms\Get;
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Infolists\Components\Actions;
 use Filament\Resources\Resource;
 use Filament\Support\RawJs;
 use Filament\Tables;
-use Filament\Tables\Actions\Action;
-use Filament\Tables\Actions\BulkAction;
-use Filament\Tables\Actions\EditAction;
+use Filament\Actions\Action;
+use Filament\Actions\BulkAction;
+use Filament\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
@@ -39,14 +38,14 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Mohamedsabil83\FilamentFormsTinyeditor\Components\TinyEditor;
+use AmidEsfahani\FilamentTinyEditor\TinyEditor;
 use Ramsey\Collection\Collection;
 
 class ProductResource extends Resource
 {
     protected static ?string $model = Products::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
+    protected static \BackedEnum|string|null $navigationIcon = 'heroicon-o-shopping-bag';
 
 
     protected static ?string $modelLabel = 'محصول';
@@ -55,63 +54,52 @@ class ProductResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
-    protected static ?string $navigationGroup = 'محصولات';
+    protected static \UnitEnum|string|null $navigationGroup = 'محصولات';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form->schema([
-            Grid::make(3)->schema([
-                Grid::make(1)->schema([
-                    Grid::make(1)->schema([
-                        TextInput::make('title')->required()->label('عنوان')->maxLength(255),
-                        TextInput::make('title_h1')->required()->label('عنوان h1 :')->maxLength(255),
-                    ]),
-
-                    Section::make()->schema([
-                        Textarea::make('description')->label('خلاصه')->maxLength(65535)->required(),
-                        TinyEditor::make('body')->label('متن')->fileAttachmentsDisk('public')->fileAttachmentsVisibility('public')->fileAttachmentsDirectory('uploads')->required()->maxHeight(500),
-                    ]),
-
-                    Section::make('سئو')->schema([
-                        TextInput::make('seo_title')->label('تایتل صفحه')->maxLength(255),
-                        Textarea::make('seo_description')->label('توضیحات صفحه')->maxLength(65535),
-                        Toggle::make('seo_follow')->label('follow'),
-                        Toggle::make('seo_index')->label('index'),
-                        TextInput::make('seo_canonical')->label('canonical'),
-                    ])->collapsed(),
-
-                ])->columnSpan(2),
-
-                Section::make()->schema([
-                    TextInput::make('slug')->label('اسلاگ')->unique(ignoreRecord: true)->maxLength(255)->required(),
-                    TextInput::make('price')->label('قیمت ( ریال)')->required()->minValue(0)->numeric(),
-                    TextInput::make('price_usd')->label('قیمت ( دلار)')->required()->minValue(0)->default(0)->numeric(),
-                    TextInput::make('price_euro')->label('قیمت ( یورو)')->required()->minValue(0)->default(0)->numeric(),
-                    Select::make('product_categories_id')->relationship('category', 'title')->label('دسته بندی')->preload()->live()->required(),
-                    Select::make('factory_id')->options(fn(GET $get) => Factories::query()->where('product_categories_id', $get('product_categories_id'))->pluck('title', 'id'))->label(' کارخانه')->required(),
-
-                    Select::make('size_id')->options(fn(GET $get) => Sizes::query()->where('product_categories_id', $get('product_categories_id'))->pluck('title', 'id'))->label(' سایز (ابعاد)')->required(),
-                    Select::make('standard_id')->options(fn(GET $get) => Standards::query()->where('product_categories_id', $get('product_categories_id'))->pluck('title', 'id'))->label('استاندارد ')->required(),
-                    Select::make('place_of_delivery')->label('محل تحویل')
-                        ->options([
-                            'store' => 'انبار',
-                            'factory' => 'کارخانه',
-                        ])->default('factory'),
-                    TextInput::make('priority')->label('اولویت نمایش')->numeric()->required(),
-                    FileUpload::make('image_name')->image()->label('تصویر')->imageEditor()->required(),
-                    Toggle::make('is_show')->label('وضعیت نمایش')->required(),
-                    Toggle::make('is_show_price')->label(' وضعیت نمایش قیمت')->required(),
-                    Select::make('detail_state')->label('حالت (ورق سیاه)')
-                        ->options([
-                            '' => 'بدون انتخاب',
-                            'رول' => 'رول',
-                            'برش خورده ' => 'برش خورده ',
-                            'فابریک' => 'فابریک'
-                        ])->default('factory'),
-                    TextInput::make('detail_width')->label('ضخامت ( ورق سیاه و نبشی )')->nullable(),
-                    TextInput::make('detail_length')->label('طول ( نبشی )')->nullable(),
-                ])->columnSpan(1),
-            ]),
+        return $schema->columns(3)->schema([
+            Section::make()->schema([
+                TextInput::make('title')->required()->label('عنوان')->maxLength(255),
+                TextInput::make('title_h1')->required()->label('عنوان h1 :')->maxLength(255),
+                Textarea::make('description')->label('خلاصه')->maxLength(65535)->required(),
+                TinyEditor::make('body')->label('متن')->fileAttachmentsDisk('public')->fileAttachmentsVisibility('public')->fileAttachmentsDirectory('uploads')->required()->maxHeight(500),
+                Section::make('سئو')->schema([
+                    TextInput::make('seo_title')->label('تایتل صفحه')->maxLength(255),
+                    Textarea::make('seo_description')->label('توضیحات صفحه')->maxLength(65535),
+                    Toggle::make('seo_follow')->label('follow'),
+                    Toggle::make('seo_index')->label('index'),
+                    TextInput::make('seo_canonical')->label('canonical'),
+                ])->collapsed(),
+            ])->columnSpan(2)->columns(1),
+            Section::make()->schema([
+                TextInput::make('slug')->label('اسلاگ')->unique(ignoreRecord: true)->maxLength(255)->required(),
+                TextInput::make('price')->label('قیمت ( ریال)')->required()->minValue(0)->numeric(),
+                TextInput::make('price_usd')->label('قیمت ( دلار)')->required()->minValue(0)->default(0)->numeric(),
+                TextInput::make('price_euro')->label('قیمت ( یورو)')->required()->minValue(0)->default(0)->numeric(),
+                Select::make('product_categories_id')->relationship('category', 'title')->label('دسته بندی')->preload()->live()->required(),
+                Select::make('factory_id')->options(fn(Get $get) => Factories::query()->where('product_categories_id', $get('product_categories_id'))->pluck('title', 'id'))->label(' کارخانه')->required(),
+                Select::make('size_id')->options(fn(Get $get) => Sizes::query()->where('product_categories_id', $get('product_categories_id'))->pluck('title', 'id'))->label(' سایز (ابعاد)')->required(),
+                Select::make('standard_id')->options(fn(Get $get) => Standards::query()->where('product_categories_id', $get('product_categories_id'))->pluck('title', 'id'))->label('استاندارد ')->required(),
+                Select::make('place_of_delivery')->label('محل تحویل')
+                    ->options([
+                        'store' => 'انبار',
+                        'factory' => 'کارخانه',
+                    ])->default('factory'),
+                TextInput::make('priority')->label('اولویت نمایش')->numeric()->required(),
+                FileUpload::make('image_name')->image()->label('تصویر')->imageEditor()->required(),
+                Toggle::make('is_show')->label('وضعیت نمایش')->required(),
+                Toggle::make('is_show_price')->label(' وضعیت نمایش قیمت')->required(),
+                Select::make('detail_state')->label('حالت (ورق سیاه)')
+                    ->options([
+                        '' => 'بدون انتخاب',
+                        'رول' => 'رول',
+                        'برش خورده ' => 'برش خورده ',
+                        'فابریک' => 'فابریک'
+                    ])->default('factory'),
+                TextInput::make('detail_width')->label('ضخامت ( ورق سیاه و نبشی )')->nullable(),
+                TextInput::make('detail_length')->label('طول ( نبشی )')->nullable(),
+            ])->columnSpan(1)->columns(1),
         ]);
     }
 
@@ -146,7 +134,7 @@ class ProductResource extends Resource
                 Filter::make('is_show_price')->label('وضعیت نمایش قیمت')->toggle(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                EditAction::make(),
 
                 Action::make('price-update')->form([
                     TextInput::make('price')->label('قیمت ( ریال)')->required()->minValue(0)->numeric()->default(fn(Products $record)=> $record->price),

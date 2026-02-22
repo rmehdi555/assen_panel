@@ -9,7 +9,7 @@ use Flowframe\Trend\TrendValue;
 
 class DashboardInvoiceChart extends LineChartWidget
 {
-    protected static ?string $heading = 'تعداد ثبت سفارش به تفکیک روز';
+    protected ?string $heading = 'تعداد ثبت سفارش به تفکیک روز';
 
     protected function getData(): array
     {
